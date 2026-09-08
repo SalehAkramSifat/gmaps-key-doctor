@@ -1,4 +1,4 @@
-# 🩺 GMaps Key Doctor — Google Maps API Health Diagnostics
+# 🗺️ 🩺 GMaps Key Doctor — Google Maps API Health Diagnostics
 
 <p align="center">
   <img src="https://img.shields.io/badge/Security-100%25%20Client--Side%20Privacy-10b981?style=for-the-badge&logo=shield" alt="Client-Side Privacy" />
@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <b>Test, diagnose, and prescribe solutions for any Google Maps Platform API key against 10 core APIs instantly — 100% client-side in your browser.</b>
+  <b>🗺️ 🩺 Test, diagnose, and prescribe solutions for any Google Maps Platform API key against 10 core APIs instantly — 100% client-side in your browser.</b>
 </p>
 
 ---
