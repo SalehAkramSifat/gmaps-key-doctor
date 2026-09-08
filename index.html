@@ -5,568 +5,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GMaps Key Doctor — Google Maps API Health Diagnostics</title>
-  <meta name="description"
-    content="Test your Google Maps Platform API key against core APIs instantly, 100% client-side in your browser." />
+  <meta name="description" content="Test your Google Maps Platform API key against core APIs instantly, 100% client-side in your browser." />
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-    rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0b0f19;
-      --panel: #111827;
-      --panel-sub: #1f2937;
-      --border: #1f293d;
-      --border-hover: #374151;
-      --text: #f3f4f6;
-      --muted: #9ca3af;
-      --muted-dim: #6b7280;
-      --primary: #3b82f6;
-      --primary-glow: rgba(59, 130, 246, 0.2);
-      --amber: #f59e0b;
-      --amber-soft: rgba(245, 158, 11, 0.12);
-      --ok: #10b981;
-      --ok-soft: rgba(16, 185, 129, 0.12);
-      --fail: #ef4444;
-      --fail-soft: rgba(239, 68, 68, 0.12);
-      --skip: #6b7280;
-      --skip-soft: rgba(107, 114, 128, 0.12);
-      --font-sans: 'Inter', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-    }
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      background: var(--bg);
-    }
-
-    body {
-      margin: 0;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
-        linear-gradient(var(--bg), var(--bg));
-      color: var(--text);
-      font-family: var(--font-sans);
-      min-height: 100vh;
-      padding: 0 20px 80px;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .shell {
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    /* Header */
-    header {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 40px 0 28px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 28px;
-    }
-
-    .radar-icon {
-      width: 64px;
-      height: 64px;
-      flex: none;
-      position: relative;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .radar-icon svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .radar-icon .sweep {
-      transform-origin: 50% 50%;
-      opacity: 0;
-    }
-
-    .radar-icon.scanning .sweep {
-      opacity: 1;
-      animation: spin 1.4s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .headline-top {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 6px;
-      flex-wrap: wrap;
-    }
-
-    .headline-badge {
-      background: var(--primary-glow);
-      border: 1px solid rgba(59, 130, 246, 0.3);
-      color: var(--primary);
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: 600;
-      font-family: var(--font-mono);
-    }
-
-    .headline-sec {
-      color: var(--ok);
-      font-size: 11px;
-      font-family: var(--font-mono);
-    }
-
-    .headline-counter {
-      background: var(--amber-soft);
-      border: 1px solid rgba(245, 158, 11, 0.3);
-      color: var(--amber);
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: 600;
-      font-family: var(--font-mono);
-    }
-
-    h1 {
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin: 0 0 6px;
-      color: var(--text);
-    }
-
-    .headline p {
-      font-size: 13.5px;
-      color: var(--muted);
-      margin: 0;
-      line-height: 1.5;
-    }
-
-    /* Console Box */
-    .console {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 24px;
-    }
-
-    .console-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--muted);
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .console-row {
-      display: flex;
-      gap: 12px;
-    }
-
-    input[type=text] {
-      flex: 1;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 12px 16px;
-      border-radius: 8px;
-      font-family: var(--font-mono);
-      font-size: 14px;
-      outline: none;
-      transition: border-color .15s ease, box-shadow .15s ease;
-    }
-
-    input[type=text]::placeholder {
-      color: var(--muted-dim);
-    }
-
-    input[type=text]:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px var(--primary-glow);
-    }
-
-    button#runBtn {
-      background: var(--primary);
-      color: #ffffff;
-      border: none;
-      padding: 0 24px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all .15s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    button#runBtn:hover:not(:disabled) {
-      background: #2563eb;
-      box-shadow: 0 0 16px var(--primary-glow);
-    }
-
-    button#runBtn:disabled {
-      opacity: .5;
-      cursor: not-allowed;
-    }
-
-    /* API Selection Panel */
-    .selection-panel {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 24px;
-    }
-
-    .selection-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .selection-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .selection-actions {
-      display: flex;
-      gap: 10px;
-    }
-
-    .btn-link {
-      background: none;
-      border: none;
-      color: var(--primary);
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      padding: 0;
-    }
-
-    .btn-link:hover {
-      text-decoration: underline;
-    }
-
-    .api-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 10px;
-    }
-
-    .api-checkbox-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 13px;
-      color: var(--text);
-      transition: all .15s ease;
-      user-select: none;
-    }
-
-    .api-checkbox-label:hover {
-      border-color: var(--border-hover);
-      background: var(--panel-sub);
-    }
-
-    .api-checkbox-label input[type=checkbox] {
-      accent-color: var(--primary);
-      width: 16px;
-      height: 16px;
-      cursor: pointer;
-    }
-
-    /* Summary Banner */
-    .summary-card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px 20px;
-      margin-bottom: 24px;
-      display: none;
-    }
-
-    .summary-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 12px;
-      margin-bottom: 12px;
-    }
-
-    .summary-title {
-      font-size: 15px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .summary-stats {
-      display: flex;
-      gap: 8px;
-      font-size: 12px;
-      font-family: var(--font-mono);
-    }
-
-    .stat-badge {
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-weight: 600;
-    }
-
-    .stat-badge.ok {
-      background: var(--ok-soft);
-      color: var(--ok);
-    }
-
-    .stat-badge.fail {
-      background: var(--fail-soft);
-      color: var(--fail);
-    }
-
-    .stat-badge.skip {
-      background: var(--skip-soft);
-      color: var(--skip);
-    }
-
-    .summary-desc {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .copy-btn {
-      background: var(--panel-sub);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all .15s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .copy-btn:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    /* Diagnostic Rack */
-    .rack-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .rack-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--muted);
-    }
-
-    .rack-status {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--muted-dim);
-    }
-
-    .rack {
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      overflow: hidden;
-      background: var(--panel);
-    }
-
-    .row {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      padding: 14px 18px;
-      border-bottom: 1px solid var(--border);
-      transition: background .15s ease;
-    }
-
-    .row:last-child {
-      border-bottom: none;
-    }
-
-    .row:hover {
-      background: var(--panel-sub);
-    }
-
-    .led {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex: none;
-      margin-top: 5px;
-      background: var(--muted-dim);
-      transition: all .2s ease;
-    }
-
-    .led.pending {
-      background: var(--amber);
-      animation: pulse 1.2s ease-in-out infinite;
-    }
-
-    .led.ok {
-      background: var(--ok);
-      box-shadow: 0 0 8px var(--ok-soft);
-    }
-
-    .led.fail {
-      background: var(--fail);
-      box-shadow: 0 0 8px var(--fail-soft);
-    }
-
-    .led.skip {
-      background: var(--skip);
-    }
-
-    @keyframes pulse {
-
-      0%,
-      100% {
-        opacity: .3;
-      }
-
-      50% {
-        opacity: 1;
-      }
-    }
-
-    .row-body {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .row-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .api-name {
-      font-weight: 600;
-      font-size: 14px;
-      color: var(--text);
-    }
-
-    .status-badge {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      padding: 2px 8px;
-      border-radius: 4px;
-    }
-
-    .status-badge.pending {
-      color: var(--amber);
-      background: var(--amber-soft);
-    }
-
-    .status-badge.ok {
-      color: var(--ok);
-      background: var(--ok-soft);
-    }
-
-    .status-badge.fail {
-      color: var(--fail);
-      background: var(--fail-soft);
-    }
-
-    .status-badge.skip {
-      color: var(--skip);
-      background: var(--skip-soft);
-    }
-
-    .row-msg {
-      font-size: 12.5px;
-      color: var(--muted);
-      margin-top: 4px;
-      line-height: 1.5;
-      word-break: break-word;
-    }
-
-    .row-msg a {
-      color: var(--primary);
-      text-decoration: none;
-    }
-
-    .row-msg a:hover {
-      text-decoration: underline;
-    }
-
-    /* Footer */
-    footer {
-      margin-top: 36px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-      font-size: 12px;
-      color: var(--muted-dim);
-      line-height: 1.6;
-    }
-
-    footer b {
-      color: var(--muted);
-    }
-  </style>
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="css/main.css" />
 </head>
 
 <body>
   <div class="shell">
 
+    <!-- ── Header ─────────────────────────────────────────────────────────── -->
     <header>
-      <div class="radar-icon" id="radarIcon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="9" stroke="#374151" stroke-width="1.5" />
-          <circle cx="12" cy="12" r="5" stroke="#374151" stroke-width="1" />
-          <line x1="12" y1="3" x2="12" y2="21" stroke="#374151" stroke-width="1" />
-          <line x1="3" y1="12" x2="21" y2="12" stroke="#374151" stroke-width="1" />
-          <path class="sweep" d="M12 12 L12 3 A9 9 0 0 1 21 12 Z" fill="var(--primary)" opacity="0.3" />
-          <circle cx="12" cy="12" r="2" fill="var(--primary)" />
+      <div class="radar-icon" id="radarIcon" title="GMaps Key Doctor">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="mapPinGrad" x1="4" y1="2" x2="28" y2="30" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#3B82F6" />
+              <stop offset="60%" stop-color="#2563EB" />
+              <stop offset="100%" stop-color="#10B981" />
+            </linearGradient>
+            <linearGradient id="keyGoldGrad" x1="10" y1="10" x2="22" y2="24" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#F59E0B" />
+              <stop offset="100%" stop-color="#FBBF24" />
+            </linearGradient>
+          </defs>
+          <!-- Google Maps Pin Outline -->
+          <path d="M16 3C10.477 3 6 7.477 6 13C6 20.25 14.75 27.8 15.38 28.34C15.74 28.65 16.26 28.65 16.62 28.34C17.25 27.8 26 20.25 26 13C26 7.477 21.523 3 16 3Z"
+            fill="#111827" stroke="url(#mapPinGrad)" stroke-width="2" stroke-linejoin="round" />
+          <!-- API Key Symbol inside Pin -->
+          <circle cx="16" cy="11.5" r="3.2" stroke="url(#keyGoldGrad)" stroke-width="1.8" fill="#1F2937" />
+          <path d="M16 14.7V22M16 17.5H18.5M16 19.8H18" stroke="url(#keyGoldGrad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+          <!-- Doctor Cross Badge -->
+          <circle cx="23.5" cy="6.5" r="3.8" fill="#10B981" />
+          <path d="M21.7 6.5H25.3M23.5 4.7V8.3" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" />
         </svg>
       </div>
+
       <div class="headline">
         <div class="headline-top">
           <span class="headline-badge">GMaps Key Doctor</span>
@@ -579,7 +58,7 @@
       </div>
     </header>
 
-    <!-- Input Console -->
+    <!-- ── API Key Input Console ───────────────────────────────────────────── -->
     <div class="console">
       <div class="console-label">
         <span>INPUT GOOGLE MAPS API KEY</span>
@@ -594,19 +73,18 @@
           Scan Key
         </button>
       </div>
-      <div class="restriction-tip"
-        style="background:var(--amber-soft); border:1px solid rgba(245,158,11,0.25); border-radius:10px; padding:12px 16px; font-size:12px; color:var(--muted); line-height:1.6; margin-top:14px;">
+      <div class="restriction-tip">
         💡 <b style="color:var(--amber);">Testing a Mobile (Flutter / Android / iOS) or Domain-Restricted Key?</b><br />
         Google Cloud blocks browser requests if your key is restricted to Mobile Apps (Package Name/SHA-1) or specific
         website domains.<br />
-        To test on Key Radar, temporarily add <code>http://127.0.0.1:*</code> or <code>http://localhost:*</code> (or
-        your Vercel URL) to <i>Application Restrictions &gt; Website Referrers</i> in <a
-          href="https://console.cloud.google.com/google/maps-apis/credentials" target="_blank"
-          style="color:var(--primary);">Google Cloud Console Credentials</a>.
+        Temporarily add <code>http://127.0.0.1:*</code> or <code>http://localhost:*</code> (or your Vercel URL)
+        to <i>Application Restrictions &gt; Website Referrers</i> in
+        <a href="https://console.cloud.google.com/google/maps-apis/credentials" target="_blank" rel="noopener">
+          Google Cloud Console Credentials</a>.
       </div>
     </div>
 
-    <!-- API Checkbox Selection Panel -->
+    <!-- ── API Checkbox Selection Panel ──────────────────────────────────── -->
     <div class="selection-panel">
       <div class="selection-header">
         <div class="selection-title">
@@ -625,7 +103,7 @@
       <div class="api-grid" id="apiGrid"></div>
     </div>
 
-    <!-- Summary Banner -->
+    <!-- ── Summary Banner ────────────────────────────────────────────────── -->
     <div class="summary-card" id="summaryCard">
       <div class="summary-header">
         <div class="summary-title" id="summaryTitle">Diagnostic Summary</div>
@@ -643,22 +121,70 @@
       <div class="summary-desc" id="summaryDesc"></div>
     </div>
 
-    <!-- Diagnostic Rack -->
+    <!-- ── Diagnostic Rack ────────────────────────────────────────────────── -->
     <div class="rack-header">
       <span class="rack-title">DIAGNOSTIC RESULTS</span>
       <span class="rack-status" id="scanState">STATUS: IDLE</span>
     </div>
     <div class="rack" id="rack"></div>
 
+    <!-- ── Footer ────────────────────────────────────────────────────────── -->
     <footer>
-      <b>Privacy Guarantee:</b> Your API Key is never sent to any third-party backend or database. Requests travel
-      directly from your browser to Google API endpoints.<br />
-      <b>Troubleshooting Tip:</b> If an API returns <code>REQUEST_DENIED</code> or <code>ApiNotActivatedMapError</code>,
-      click the adjacent console link to activate the service in Google Cloud Console.
+      <div class="footer-links">
+        <a href="https://github.com/SalehAkramSifat/gmaps-key-doctor" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px; margin-right:4px;">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          ⭐ View on GitHub
+        </a>
+        <span>•</span>
+        <a href="https://console.cloud.google.com/google/maps-apis/credentials" target="_blank" rel="noopener">🔑 Google Cloud Console Credentials</a>
+      </div>
+      <div class="footer-note">
+        <b>Privacy Guarantee:</b> 100% Client-Side. Your API key is never logged or transmitted to any external backend server.<br />
+        <b>Troubleshooting Tip:</b> If an API returns <code>REQUEST_DENIED</code> or <code>ApiNotActivatedMapError</code>,
+        click the adjacent console link to enable the service in
+        <a href="https://console.cloud.google.com/google/maps-apis/credentials" target="_blank" rel="noopener">Google Cloud Console</a>.
+      </div>
     </footer>
+
+  </div><!-- /.shell -->
+
+  <!-- ── Easter Egg Developer Modal ────────────────────────────────────── -->
+  <div class="dev-modal-overlay" id="devModalOverlay">
+    <div class="dev-modal">
+      <button class="dev-modal-close" id="devModalClose" title="Close">&times;</button>
+      <div class="dev-avatar-wrap">
+        <div class="dev-avatar-ring"></div>
+        <div class="dev-avatar">👨‍💻</div>
+      </div>
+      <span class="dev-badge">🩺 Developer Secret Unlocked!</span>
+      <h2 class="dev-name">Saleh Akram Sifat</h2>
+      <p class="dev-title">Creator &amp; Developer of GMaps Key Doctor<br />Full Stack &amp; Mobile App Specialist</p>
+      <div class="dev-links">
+        <a class="dev-link-btn github" href="https://github.com/SalehAkramSifat" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+          </svg>
+          GitHub Profile
+        </a>
+        <a class="dev-link-btn linkedin" href="https://linkedin.com/in/salehakramsifat" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.74a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z" />
+          </svg>
+          LinkedIn Profile
+        </a>
+      </div>
+    </div>
   </div>
 
-  <script src="app.js"></script>
+  <!-- ── API Detail Popup ─────────────────────────────────────────────── -->
+  <div class="detail-popup-overlay" id="detailPopupOverlay">
+    <div class="detail-popup" id="detailPopup"></div>
+  </div>
+
+  <!-- ── Application Entry Point (ES Module) ───────────────────────────── -->
+  <script type="module" src="js/app.js"></script>
 </body>
 
 </html>

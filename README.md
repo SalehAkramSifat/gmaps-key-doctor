@@ -10,6 +10,18 @@
   <b>🗺️ 🩺 Test, diagnose, and prescribe solutions for any Google Maps Platform API key against 10 core APIs instantly — 100% client-side in your browser.</b>
 </p>
 
+<p align="center">
+  <img src="assets/screenshots/hero-preview.png" alt="GMaps Key Doctor Dashboard Preview" width="100%" />
+</p>
+
+---
+
+## 📸 Interface Screenshots
+
+| 🩺 Diagnostic Detail Modal | 📱 Mobile Responsive View |
+| :---: | :---: |
+| <img src="assets/screenshots/api-detail-modal.png" alt="Interactive API Detail Diagnostics Modal" width="100%" /> | <img src="assets/screenshots/mobile-preview.png" alt="Mobile Responsive Viewport" width="100%" /> |
+
 ---
 
 ## 💡 Why GMaps Key Doctor Exists

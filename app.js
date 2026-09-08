@@ -471,7 +471,74 @@ runBtn.addEventListener("click", () => {
   }, 7000);
 });
 
+// Developer Easter Egg (15 Taps on Logo)
+let logoTapCount = 0;
+let tapTimeout = null;
+const devModalOverlay = document.getElementById("devModalOverlay");
+const devModalClose = document.getElementById("devModalClose");
+
+function openDevModal() {
+  if (devModalOverlay) {
+    devModalOverlay.classList.add("active");
+  }
+}
+
+function closeDevModal() {
+  if (devModalOverlay) {
+    devModalOverlay.classList.remove("active");
+  }
+}
+
+const headerElements = [
+  document.getElementById("radarIcon"),
+  document.querySelector(".headline-badge"),
+  document.querySelector("header h1")
+].filter(Boolean);
+
+headerElements.forEach(el => {
+  el.style.cursor = "pointer";
+  el.addEventListener("click", (e) => {
+    e.stopPropagation();
+    logoTapCount += 1;
+
+    // Visual pulse effect on icon
+    if (radarIcon) {
+      radarIcon.style.transform = "scale(0.85)";
+      setTimeout(() => radarIcon.style.transform = "scale(1)", 140);
+    }
+
+    clearTimeout(tapTimeout);
+    tapTimeout = setTimeout(() => {
+      logoTapCount = 0;
+    }, 4000);
+
+    if (logoTapCount === 15) {
+      logoTapCount = 0;
+      openDevModal();
+    }
+  });
+});
+
+if (devModalClose) {
+  devModalClose.addEventListener("click", closeDevModal);
+}
+
+if (devModalOverlay) {
+  devModalOverlay.addEventListener("click", (e) => {
+    if (e.target === devModalOverlay) {
+      closeDevModal();
+    }
+  });
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeDevModal();
+  }
+});
+
 // Initialize
 updateScanCounterDisplay();
 renderApiGrid();
 buildRack();
+

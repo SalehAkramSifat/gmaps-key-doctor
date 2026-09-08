@@ -1,0 +1,169 @@
+/* Easter Egg Developer Modal Styles */
+.dev-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(11, 15, 25, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.dev-modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dev-modal {
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: 20px;
+  max-width: 420px;
+  width: 100%;
+  padding: 32px 28px;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(59, 130, 246, 0.2);
+  transform: scale(0.9);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: center;
+}
+
+.dev-modal-overlay.active .dev-modal {
+  transform: scale(1);
+}
+
+.dev-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--muted);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.15s ease;
+}
+
+.dev-modal-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.dev-avatar-wrap {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 16px;
+}
+
+.dev-avatar-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #10b981, #f59e0b);
+  animation: spinRing 4s linear infinite;
+}
+
+@keyframes spinRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.dev-avatar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #1f2937;
+  border: 2px solid #111827;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+}
+
+.dev-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(59, 130, 246, 0.12);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.dev-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #f3f4f6;
+  margin: 0 0 6px;
+}
+
+.dev-title {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 22px;
+  line-height: 1.5;
+}
+
+.dev-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dev-link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+  border: 1px solid var(--border);
+}
+
+.dev-link-btn.github {
+  background: #1f2937;
+  color: #f3f4f6;
+}
+
+.dev-link-btn.github:hover {
+  background: #374151;
+  border-color: #4b5563;
+  transform: translateY(-1px);
+}
+
+.dev-link-btn.linkedin {
+  background: rgba(10, 102, 194, 0.15);
+  color: #38bdf8;
+  border-color: rgba(10, 102, 194, 0.4);
+}
+
+.dev-link-btn.linkedin:hover {
+  background: rgba(10, 102, 194, 0.3);
+  color: #7dd3fc;
+  transform: translateY(-1px);
+}

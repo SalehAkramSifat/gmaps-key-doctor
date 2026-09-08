@@ -1,0 +1,265 @@
+/* Responsive Styles for Mobile, Tablet & Small Devices */
+
+/* ── Tablet & Small Laptops (max-width: 768px) ────────────────────────── */
+@media (max-width: 768px) {
+  body {
+    padding: 0 16px 60px;
+  }
+
+  .api-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+/* ── Mobile Devices (max-width: 640px) ─────────────────────────────────── */
+@media (max-width: 640px) {
+  body {
+    padding: 0 12px 48px;
+  }
+
+  /* Header adjustments */
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 24px 0 20px;
+    margin-bottom: 20px;
+  }
+
+  .radar-icon {
+    width: 52px;
+    height: 52px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .headline-top {
+    gap: 6px 8px;
+  }
+
+  .headline-badge,
+  .headline-sec,
+  .headline-counter {
+    font-size: 10.5px;
+    padding: 2px 7px;
+  }
+
+  h1 {
+    font-size: 21px;
+    margin-bottom: 4px;
+  }
+
+  .headline p {
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+
+  /* Console Box */
+  .console {
+    padding: 16px 14px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+  }
+
+  .console-label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    font-size: 11px;
+  }
+
+  .console-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 13px;
+  }
+
+  button#runBtn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 18px;
+    font-size: 13.5px;
+  }
+
+  .restriction-tip {
+    padding: 10px 12px;
+    font-size: 11.5px;
+    line-height: 1.5;
+    margin-top: 12px;
+  }
+
+  /* Selection Panel */
+  .selection-panel {
+    padding: 16px 14px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+  }
+
+  .selection-header {
+    gap: 8px;
+  }
+
+  .selection-title {
+    font-size: 11.5px;
+  }
+
+  .api-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .api-checkbox-label {
+    padding: 9px 11px;
+    font-size: 12.5px;
+  }
+
+  /* Summary Card */
+  .summary-card {
+    padding: 14px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+  }
+
+  .summary-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .summary-header > div:last-child {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .summary-title {
+    font-size: 14px;
+  }
+
+  /* Rack / Diagnostics */
+  .rack-header {
+    margin-bottom: 10px;
+  }
+
+  .rack-title,
+  .rack-status {
+    font-size: 11.5px;
+  }
+
+  .rack {
+    border-radius: 12px;
+  }
+
+  .row {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .row-top {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .api-name {
+    font-size: 13.5px;
+  }
+
+  .row-msg {
+    font-size: 11.5px;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 28px;
+    padding-top: 18px;
+    font-size: 11.5px;
+  }
+
+  .footer-links {
+    gap: 6px 10px;
+  }
+
+  /* Modals on Mobile */
+  .dev-modal {
+    max-width: 92%;
+    padding: 24px 18px;
+    border-radius: 16px;
+  }
+
+  .dev-name {
+    font-size: 19px;
+  }
+
+  .dev-title {
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+
+  .detail-popup {
+    max-width: 94%;
+    padding: 22px 16px 18px;
+    border-radius: 16px;
+    max-height: 85vh;
+  }
+
+  .popup-header {
+    gap: 10px;
+    padding-right: 32px;
+  }
+
+  .popup-api-icon {
+    font-size: 26px;
+  }
+
+  .popup-api-name {
+    font-size: 15px;
+  }
+
+  .popup-description,
+  .popup-pass-note,
+  .popup-warn-note,
+  .popup-skip-note,
+  .popup-list li,
+  .popup-fix-step {
+    font-size: 12px;
+  }
+}
+
+/* ── Small Mobile Devices (max-width: 420px) ───────────────────────────── */
+@media (max-width: 420px) {
+  body {
+    padding: 0 10px 40px;
+  }
+
+  h1 {
+    font-size: 19px;
+  }
+
+  .headline-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dev-avatar-wrap {
+    width: 68px;
+    height: 68px;
+  }
+
+  .dev-avatar {
+    font-size: 30px;
+  }
+
+  .dev-link-btn {
+    padding: 10px 14px;
+    font-size: 12.5px;
+  }
+
+  .popup-console-link {
+    padding: 10px;
+    font-size: 12px;
+  }
+}

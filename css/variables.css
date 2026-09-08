@@ -1,0 +1,23 @@
+/* CSS Design System Tokens */
+:root {
+  --bg: #0b0f19;
+  --panel: #111827;
+  --panel-sub: #1f2937;
+  --border: #1f293d;
+  --border-hover: #374151;
+  --text: #f3f4f6;
+  --muted: #9ca3af;
+  --muted-dim: #6b7280;
+  --primary: #3b82f6;
+  --primary-glow: rgba(59, 130, 246, 0.2);
+  --amber: #f59e0b;
+  --amber-soft: rgba(245, 158, 11, 0.12);
+  --ok: #10b981;
+  --ok-soft: rgba(16, 185, 129, 0.12);
+  --fail: #ef4444;
+  --fail-soft: rgba(239, 68, 68, 0.12);
+  --skip: #6b7280;
+  --skip-soft: rgba(107, 114, 128, 0.12);
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}

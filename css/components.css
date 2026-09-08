@@ -1,0 +1,302 @@
+/* Component UI Elements (Inputs, Buttons, Checkboxes, Badges, Summary Card) */
+
+/* Restriction Tip Banner */
+.restriction-tip {
+  background: var(--amber-soft);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-top: 14px;
+}
+
+.restriction-tip b {
+  color: var(--amber);
+}
+
+.restriction-tip a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.restriction-tip a:hover {
+  text-decoration: underline;
+}
+
+/* Inputs & Form Elements */
+input[type=text] {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+input[type=text]::placeholder {
+  color: var(--muted-dim);
+}
+
+input[type=text]:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+/* Action Buttons */
+button#runBtn {
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  padding: 0 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all .15s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+button#runBtn:hover:not(:disabled) {
+  background: #2563eb;
+  box-shadow: 0 0 16px var(--primary-glow);
+}
+
+button#runBtn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+.copy-btn {
+  background: var(--panel-sub);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all .15s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.copy-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* API Checkbox Selection Panel */
+.selection-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.selection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.selection-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.selection-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.api-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
+}
+
+.api-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text);
+  transition: all .15s ease;
+  user-select: none;
+}
+
+.api-checkbox-label:hover {
+  border-color: var(--border-hover);
+  background: var(--panel-sub);
+}
+
+.api-checkbox-label input[type=checkbox] {
+  accent-color: var(--primary);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Summary Banner */
+.summary-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  display: none;
+}
+
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.summary-title {
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.summary-stats {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+}
+
+.stat-badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.stat-badge.ok {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
+.stat-badge.fail {
+  background: var(--fail-soft);
+  color: var(--fail);
+}
+
+.stat-badge.skip {
+  background: var(--skip-soft);
+  color: var(--skip);
+}
+
+.summary-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* LED Indicators & Status Badges */
+.led {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: none;
+  margin-top: 5px;
+  background: var(--muted-dim);
+  transition: all .2s ease;
+}
+
+.led.pending {
+  background: var(--amber);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.led.ok {
+  background: var(--ok);
+  box-shadow: 0 0 8px var(--ok-soft);
+}
+
+.led.fail {
+  background: var(--fail);
+  box-shadow: 0 0 8px var(--fail-soft);
+}
+
+.led.skip {
+  background: var(--skip);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: .3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.status-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.status-badge.pending {
+  color: var(--amber);
+  background: var(--amber-soft);
+}
+
+.status-badge.ok {
+  color: var(--ok);
+  background: var(--ok-soft);
+}
+
+.status-badge.fail {
+  color: var(--fail);
+  background: var(--fail-soft);
+}
+
+.status-badge.skip {
+  color: var(--skip);
+  background: var(--skip-soft);
+}
