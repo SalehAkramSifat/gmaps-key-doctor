@@ -1,0 +1,13 @@
+{
+  "name": "key-radar",
+  "version": "1.0.0",
+  "description": "Google Maps API key diagnostics tool — runs entirely client-side.",
+  "private": true,
+  "scripts": {
+    "dev": "live-server --port=5500 --no-browser",
+    "start": "live-server --port=5500"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

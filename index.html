@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GMaps Key Doctor — Google Maps API Health Diagnostics</title>
+  <meta name="description"
+    content="Test your Google Maps Platform API key against core APIs instantly, 100% client-side in your browser." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --panel: #111827;
+      --panel-sub: #1f2937;
+      --border: #1f293d;
+      --border-hover: #374151;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --muted-dim: #6b7280;
+      --primary: #3b82f6;
+      --primary-glow: rgba(59, 130, 246, 0.2);
+      --amber: #f59e0b;
+      --amber-soft: rgba(245, 158, 11, 0.12);
+      --ok: #10b981;
+      --ok-soft: rgba(16, 185, 129, 0.12);
+      --fail: #ef4444;
+      --fail-soft: rgba(239, 68, 68, 0.12);
+      --skip: #6b7280;
+      --skip-soft: rgba(107, 114, 128, 0.12);
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
+        linear-gradient(var(--bg), var(--bg));
+      color: var(--text);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      padding: 0 20px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .shell {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 40px 0 28px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+
+    .radar-icon {
+      width: 64px;
+      height: 64px;
+      flex: none;
+      position: relative;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .radar-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .radar-icon .sweep {
+      transform-origin: 50% 50%;
+      opacity: 0;
+    }
+
+    .radar-icon.scanning .sweep {
+      opacity: 1;
+      animation: spin 1.4s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .headline-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .headline-badge {
+      background: var(--primary-glow);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: var(--primary);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+    .headline-sec {
+      color: var(--ok);
+      font-size: 11px;
+      font-family: var(--font-mono);
+    }
+
+    .headline-counter {
+      background: var(--amber-soft);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--amber);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 6px;
+      color: var(--text);
+    }
+
+    .headline p {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Console Box */
+    .console {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .console-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .console-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    input[type=text] {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      outline: none;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+
+    input[type=text]::placeholder {
+      color: var(--muted-dim);
+    }
+
+    input[type=text]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    button#runBtn {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all .15s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    button#runBtn:hover:not(:disabled) {
+      background: #2563eb;
+      box-shadow: 0 0 16px var(--primary-glow);
+    }
+
+    button#runBtn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    /* API Selection Panel */
+    .selection-panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .selection-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .selection-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .selection-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-link {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .btn-link:hover {
+      text-decoration: underline;
+    }
+
+    .api-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+    }
+
+    .api-checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text);
+      transition: all .15s ease;
+      user-select: none;
+    }
+
+    .api-checkbox-label:hover {
+      border-color: var(--border-hover);
+      background: var(--panel-sub);
+    }
+
+    .api-checkbox-label input[type=checkbox] {
+      accent-color: var(--primary);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    /* Summary Banner */
+    .summary-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      display: none;
+    }
+
+    .summary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+    }
+
+    .summary-title {
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .summary-stats {
+      display: flex;
+      gap: 8px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+    }
+
+    .stat-badge {
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    .stat-badge.ok {
+      background: var(--ok-soft);
+      color: var(--ok);
+    }
+
+    .stat-badge.fail {
+      background: var(--fail-soft);
+      color: var(--fail);
+    }
+
+    .stat-badge.skip {
+      background: var(--skip-soft);
+      color: var(--skip);
+    }
+
+    .summary-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .copy-btn {
+      background: var(--panel-sub);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all .15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .copy-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Diagnostic Rack */
+    .rack-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .rack-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .rack-status {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted-dim);
+    }
+
+    .rack {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--panel);
+    }
+
+    .row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      transition: background .15s ease;
+    }
+
+    .row:last-child {
+      border-bottom: none;
+    }
+
+    .row:hover {
+      background: var(--panel-sub);
+    }
+
+    .led {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex: none;
+      margin-top: 5px;
+      background: var(--muted-dim);
+      transition: all .2s ease;
+    }
+
+    .led.pending {
+      background: var(--amber);
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    .led.ok {
+      background: var(--ok);
+      box-shadow: 0 0 8px var(--ok-soft);
+    }
+
+    .led.fail {
+      background: var(--fail);
+      box-shadow: 0 0 8px var(--fail-soft);
+    }
+
+    .led.skip {
+      background: var(--skip);
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: .3;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .row-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .row-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .api-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .status-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .status-badge.pending {
+      color: var(--amber);
+      background: var(--amber-soft);
+    }
+
+    .status-badge.ok {
+      color: var(--ok);
+      background: var(--ok-soft);
+    }
+
+    .status-badge.fail {
+      color: var(--fail);
+      background: var(--fail-soft);
+    }
+
+    .status-badge.skip {
+      color: var(--skip);
+      background: var(--skip-soft);
+    }
+
+    .row-msg {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .row-msg a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .row-msg a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted-dim);
+      line-height: 1.6;
+    }
+
+    footer b {
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+
+    <header>
+      <div class="radar-icon" id="radarIcon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="9" stroke="#374151" stroke-width="1.5" />
+          <circle cx="12" cy="12" r="5" stroke="#374151" stroke-width="1" />
+          <line x1="12" y1="3" x2="12" y2="21" stroke="#374151" stroke-width="1" />
+          <line x1="3" y1="12" x2="21" y2="12" stroke="#374151" stroke-width="1" />
+          <path class="sweep" d="M12 12 L12 3 A9 9 0 0 1 21 12 Z" fill="var(--primary)" opacity="0.3" />
+          <circle cx="12" cy="12" r="2" fill="var(--primary)" />
+        </svg>
+      </div>
+      <div class="headline">
+        <div class="headline-top">
+          <span class="headline-badge">GMaps Key Doctor</span>
+          <span class="headline-sec">✓ 100% Client-Side Privacy</span>
+          <span class="headline-counter" id="scanCounterTag">⚡ <span id="totalScanCount">0</span> Scans Done</span>
+        </div>
+        <h1>GMaps Key Doctor</h1>
+        <p>Test any Google Maps Platform API key against core services instantly. Diagnose enabled APIs, restrictions,
+          and billing issues entirely in your browser.</p>
+      </div>
+    </header>
+
+    <!-- Input Console -->
+    <div class="console">
+      <div class="console-label">
+        <span>INPUT GOOGLE MAPS API KEY</span>
+        <span style="font-weight: normal; font-size: 11px;">🔒 Never stored or logged on any server</span>
+      </div>
+      <div class="console-row">
+        <input id="apiKey" type="text" placeholder="AIzaSy..." autocomplete="off" spellcheck="false" />
+        <button id="runBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+          </svg>
+          Scan Key
+        </button>
+      </div>
+      <div class="restriction-tip"
+        style="background:var(--amber-soft); border:1px solid rgba(245,158,11,0.25); border-radius:10px; padding:12px 16px; font-size:12px; color:var(--muted); line-height:1.6; margin-top:14px;">
+        💡 <b style="color:var(--amber);">Testing a Mobile (Flutter / Android / iOS) or Domain-Restricted Key?</b><br />
+        Google Cloud blocks browser requests if your key is restricted to Mobile Apps (Package Name/SHA-1) or specific
+        website domains.<br />
+        To test on Key Radar, temporarily add <code>http://127.0.0.1:*</code> or <code>http://localhost:*</code> (or
+        your Vercel URL) to <i>Application Restrictions &gt; Website Referrers</i> in <a
+          href="https://console.cloud.google.com/google/maps-apis/credentials" target="_blank"
+          style="color:var(--primary);">Google Cloud Console Credentials</a>.
+      </div>
+    </div>
+
+    <!-- API Checkbox Selection Panel -->
+    <div class="selection-panel">
+      <div class="selection-header">
+        <div class="selection-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 11l3 3L22 4" />
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+          </svg>
+          SELECT APIs TO TEST (<span id="selectedCount">10</span>/10 Selected)
+        </div>
+        <div class="selection-actions">
+          <button class="btn-link" id="selectAllBtn" style="display:none;">Select All</button>
+          <span id="actionDivider" style="color:var(--border); display:none;">|</span>
+          <button class="btn-link" id="clearAllBtn">Clear All</button>
+        </div>
+      </div>
+      <div class="api-grid" id="apiGrid"></div>
+    </div>
+
+    <!-- Summary Banner -->
+    <div class="summary-card" id="summaryCard">
+      <div class="summary-header">
+        <div class="summary-title" id="summaryTitle">Diagnostic Summary</div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <div class="summary-stats" id="summaryStats"></div>
+          <button class="copy-btn" id="copyBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            Copy Report
+          </button>
+        </div>
+      </div>
+      <div class="summary-desc" id="summaryDesc"></div>
+    </div>
+
+    <!-- Diagnostic Rack -->
+    <div class="rack-header">
+      <span class="rack-title">DIAGNOSTIC RESULTS</span>
+      <span class="rack-status" id="scanState">STATUS: IDLE</span>
+    </div>
+    <div class="rack" id="rack"></div>
+
+    <footer>
+      <b>Privacy Guarantee:</b> Your API Key is never sent to any third-party backend or database. Requests travel
+      directly from your browser to Google API endpoints.<br />
+      <b>Troubleshooting Tip:</b> If an API returns <code>REQUEST_DENIED</code> or <code>ApiNotActivatedMapError</code>,
+      click the adjacent console link to activate the service in Google Cloud Console.
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
