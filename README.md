@@ -79,22 +79,6 @@ Simply open `index.html` directly in any web browser.
 
 ---
 
-## 🌐 One-Click Deployment
-
-### Deploy to Vercel
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
-
-1. Import this repository in Vercel.
-2. Framework Preset: **Other** (No build command or output directory required).
-3. Click **Deploy**.
-
-### Deploy to GitHub Pages
-1. Go to repository **Settings -> Pages**.
-2. Source: **Deploy from a branch** -> Select `main` branch `/root`.
-3. Click **Save**.
-
----
-
 ## 🔒 Privacy & Security
 
 GMaps Key Doctor is built with privacy as its primary foundation:
