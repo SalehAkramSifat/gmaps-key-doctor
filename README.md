@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/screenshots/hero-preview.png" alt="GMaps Key Doctor Dashboard Preview" width="100%" />
+  <img src="assets/demo.gif" alt="GMaps Key Doctor Live Animated Demo" width="100%" />
 </p>
 
 ---
