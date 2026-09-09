@@ -1,6 +1,7 @@
 # 🗺️ 🩺 GMaps Key Doctor — Google Maps API Health Diagnostics
 
 <p align="center">
+  <a href="https://gmaps-key-doctor.vercel.app/"><img src="https://img.shields.io/badge/Live%20Demo-gmaps--key--doctor.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" /></a>
   <img src="https://img.shields.io/badge/Security-100%25%20Client--Side%20Privacy-10b981?style=for-the-badge&logo=shield" alt="Client-Side Privacy" />
   <img src="https://img.shields.io/badge/Google%20Maps-10%20Core%20APIs%20Supported-3b82f6?style=for-the-badge&logo=googlemaps" alt="Google Maps APIs" />
   <img src="https://img.shields.io/badge/License-MIT-f59e0b?style=for-the-badge" alt="MIT License" />
@@ -8,6 +9,8 @@
 
 <p align="center">
   <b>🗺️ 🩺 Test, diagnose, and prescribe solutions for any Google Maps Platform API key against 10 core APIs instantly — 100% client-side in your browser.</b>
+  <br />
+  👉 <b><a href="https://gmaps-key-doctor.vercel.app/">Try the Live Website Here</a></b>
 </p>
 
 <p align="center">
@@ -65,7 +68,14 @@ When a feature fails in a Flutter/Mobile or Web app, developers usually face bla
 
 ---
 
-## 🚀 Quick Start (Local Run)
+## 🌐 Live Demo
+
+Access the live website hosted on Vercel:
+👉 **[https://gmaps-key-doctor.vercel.app/](https://gmaps-key-doctor.vercel.app/)**
+
+---
+
+## 🚀 Local Setup
 
 ### Option 1 — Static Server (npm)
 ```bash

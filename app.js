@@ -32,7 +32,7 @@ let testResults = {};
 
 // Scan Counter Logic
 let localScans = parseInt(localStorage.getItem("key_radar_scans_count") || "0", 10);
-let baseCounter = 1240;
+let baseCounter = 1000;
 
 function updateScanCounterDisplay() {
   if (totalScanCountEl) {
@@ -46,8 +46,8 @@ function incrementScanCounter() {
   updateScanCounterDisplay();
 
   try {
-    fetch("https://api.counterapi.dev/v1/key-radar-app/scans/up").catch(() => {});
-  } catch (e) {}
+    fetch("https://api.counterapi.dev/v1/key-radar-app/scans/up").catch(() => { });
+  } catch (e) { }
 }
 
 // Render Checkboxes
@@ -151,7 +151,7 @@ function setStatus(id, level, msgHtml, rawMsgText) {
   word.className = "status-badge " + level;
   word.textContent = level === "ok" ? "Pass" : level === "warn" ? "Info" : level === "pending" ? "Waiting" : level === "skip" ? "Skipped" : "Fail";
   if (msgHtml !== undefined) msg.innerHTML = msgHtml;
-  
+
   testResults[id] = { level, text: rawMsgText || msg.textContent };
 }
 
@@ -353,13 +353,13 @@ function renderSummary() {
 
 copyBtn.addEventListener("click", () => {
   const keyVal = KEY_FIELD.value.trim();
-  const maskedKey = keyVal.length > 8 ? keyVal.substring(0,6) + "..." + keyVal.substring(keyVal.length-4) : "HIDDEN_KEY";
+  const maskedKey = keyVal.length > 8 ? keyVal.substring(0, 6) + "..." + keyVal.substring(keyVal.length - 4) : "HIDDEN_KEY";
   let reportText = `--- KEY RADAR DIAGNOSTIC REPORT ---\nKey: ${maskedKey}\nTimestamp: ${new Date().toLocaleString()}\n\n`;
   rows.forEach(r => {
     const res = testResults[r.id];
     reportText += `[${res ? res.level.toUpperCase() : "SKIPPED"}] ${r.name}: ${res ? res.text : "Not tested"}\n`;
   });
-  
+
   navigator.clipboard.writeText(reportText).then(() => {
     const oldText = copyBtn.innerHTML;
     copyBtn.innerHTML = `✓ Copied!`;
@@ -410,7 +410,7 @@ runBtn.addEventListener("click", () => {
     };
     img.onerror = () => {
       const url = buildConsoleUrl("static-maps-backend.googleapis.com");
-      setStatus("staticmap", "fail", 
+      setStatus("staticmap", "fail",
         "REQUEST_DENIED — Maps Static API disabled or restricted. <a href='" + url + "' target='_blank'>Enable in Cloud Console</a>",
         "REQUEST_DENIED"
       );
@@ -428,7 +428,7 @@ runBtn.addEventListener("click", () => {
     };
     img.onerror = () => {
       const url = buildConsoleUrl("street-view-image-backend.googleapis.com");
-      setStatus("streetview", "fail", 
+      setStatus("streetview", "fail",
         "REQUEST_DENIED — Street View Static API disabled or restricted. <a href='" + url + "' target='_blank'>Enable in Cloud Console</a>",
         "REQUEST_DENIED"
       );
@@ -441,7 +441,7 @@ runBtn.addEventListener("click", () => {
   if (selectedIds.includes("timezone")) {
     const ts = Math.floor(Date.now() / 1000);
     const tzUrl = `https://maps.googleapis.com/maps/api/timezone/json?location=23.8103,90.4125&timestamp=${ts}&key=${encodeURIComponent(key)}`;
-    setStatus("timezone", "warn", 
+    setStatus("timezone", "warn",
       `No Web JS SDK available. <a href="${tzUrl}" target="_blank" rel="noopener">Click here for direct REST test link</a> — <code>"status": "OK"</code> confirms API is active.`,
       "Direct REST Test link available"
     );
@@ -451,7 +451,7 @@ runBtn.addEventListener("click", () => {
   // 4. Maps Embed Test
   if (selectedIds.includes("embedmap")) {
     const embedUrl = `https://www.google.com/maps/embed/v1/place?key=${encodeURIComponent(key)}&q=Dhaka`;
-    setStatus("embedmap", "warn", 
+    setStatus("embedmap", "warn",
       `Maps Embed API operates via iframe. <a href="${embedUrl}" target="_blank" rel="noopener">Click here to test Embed URL</a> — map render confirms activation.`,
       "Embed Iframe test link available"
     );

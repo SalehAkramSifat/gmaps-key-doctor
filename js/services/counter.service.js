@@ -4,7 +4,7 @@
 import { elements } from '../ui/dom.elements.js';
 
 let localScans = parseInt(localStorage.getItem("key_radar_scans_count") || "0", 10);
-const baseCounter = 1240;
+const baseCounter = 1000;
 
 export function updateScanCounterDisplay() {
   if (elements.totalScanCountEl) {
@@ -18,7 +18,7 @@ export function incrementScanCounter() {
   updateScanCounterDisplay();
 
   try {
-    fetch("https://api.counterapi.dev/v1/key-radar-app/scans/up").catch(() => {});
+    fetch("https://api.counterapi.dev/v1/key-radar-app/scans/up").catch(() => { });
   } catch (e) {
     // Silent catch for network isolation
   }
