@@ -1,16 +1,19 @@
 # 🗺️ 🩺 GMaps Key Doctor — Google Maps API Health Diagnostics
 
 <p align="center">
-  <a href="https://gmaps-key-doctor.vercel.app/">
-    <img src="https://img.shields.io/badge/🌐_LIVE_WEBSITE-gmaps--key--doctor.vercel.app-0070f3?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Website" />
-  </a>
   <img src="https://img.shields.io/badge/Security-100%25%20Client--Side%20Privacy-10b981?style=for-the-badge&logo=shield" alt="Client-Side Privacy" />
   <img src="https://img.shields.io/badge/Google%20Maps-10%20Core%20APIs-3b82f6?style=for-the-badge&logo=googlemaps" alt="Google Maps APIs" />
+  <img src="https://img.shields.io/badge/License-MIT-f59e0b?style=for-the-badge" alt="MIT License" />
 </p>
 
 > [!IMPORTANT]
 > ### 🚀 **LIVE WEBSITE IS ONLINE**
-> **Test your Google Maps API keys instantly in your browser:**  
+> Test your Google Maps API keys instantly in your browser:  
+> 
+> <a href="https://gmaps-key-doctor.vercel.app/">
+>   <img src="https://img.shields.io/badge/🌐_LIVE_WEBSITE-gmaps--key--doctor.vercel.app-0070f3?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Website" />
+> </a>  
+> 
 > 🌐 **[https://gmaps-key-doctor.vercel.app/](https://gmaps-key-doctor.vercel.app/)**
 
 <p align="center">
