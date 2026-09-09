@@ -188,7 +188,9 @@ export function runDiagnostics(key, selectedIds, onComplete) {
     if (currentFrame) currentFrame.remove();
     currentFrame = document.createElement("iframe");
     currentFrame.style.display = "none";
-    currentFrame.srcdoc = buildIframeSrcdoc(key, selectedIds);
+    const htmlDoc = buildIframeSrcdoc(key, selectedIds);
+    const blob = new Blob([htmlDoc], { type: "text/html" });
+    currentFrame.src = URL.createObjectURL(blob);
     document.body.appendChild(currentFrame);
   }
 
